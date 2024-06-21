@@ -51,14 +51,6 @@
             </div>
         </div>
     </form>
-
-    <div class="text-center mb-4">
-        @if (isset($pembayarans) && count($pembayarans) > 0)
-        <a href="{{ route('pembayarans.perorang.export', ['id_warga' => request('id_warga')]) }}" class="btn btn-success">
-            <i class="bi bi-file-earmark-excel"></i> Download Excel
-        </a>
-        @endif
-    </div>
     
     <div class="card shadow-sm rounded-lg">
         <div class="card-body">
@@ -135,6 +127,11 @@
         <a href="{{ route('dashboard') }}" class="btn btn-primary d-inline-block">
             <i class="bi bi-house-door"></i> Kembali ke Dashboard
         </a>
+        @if (isset($pembayarans) && count($pembayarans) > 0)
+        <a href="{{ route('pembayarans.perorang.export', ['id_warga' => request('id_warga')]) }}" class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i> Export to Excel
+        </a>
+        @endif
     </div>
 </div>
 @endsection

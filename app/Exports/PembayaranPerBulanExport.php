@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
-class PembayaranExport implements FromCollection, WithHeadings, WithStyles, WithCustomStartCell, WithMapping
+class PembayaranPerBulanExport implements FromCollection, WithHeadings, WithStyles, WithCustomStartCell, WithMapping
 {
     protected $bulan;
     protected $filterDescription;

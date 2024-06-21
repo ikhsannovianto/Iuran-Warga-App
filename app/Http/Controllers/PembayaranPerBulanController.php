@@ -6,7 +6,7 @@ use App\Models\Pembayaran;
 use App\Models\Warga;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
-use App\Exports\PembayaranExport;
+use App\Exports\PembayaranPerBulanExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PembayaranPerBulanController extends Controller
@@ -129,7 +129,7 @@ class PembayaranPerBulanController extends Controller
     public function export(Request $request)
     {
         $bulan = $request->input('bulan');
-        return Excel::download(new PembayaranExport($bulan), 'pembayaran_per_bulan.xlsx');
+        return Excel::download(new PembayaranPerBulanExport($bulan), 'pembayaran_per_bulan.xlsx');
     }
 
 }

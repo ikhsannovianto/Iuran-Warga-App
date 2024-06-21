@@ -31,6 +31,7 @@
             <a href="{{ route('dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
         </div>
         <div class="col-md-6 text-end">
+            <a href="{{ route('wargas.export') }}" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</a>
             <a href="{{ route('wargas.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Tambah Warga</a>
         </div>
     </div>

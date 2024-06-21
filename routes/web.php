@@ -31,7 +31,17 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('rts', RTController::class);
 Route::resource('lingkungans', LingkunganController::class);
-Route::resource('wargas', WargaController::class);
+
+
+// Route untuk warga
+Route::get('/wargas', [WargaController::class, 'index'])->name('wargas.index');
+Route::get('/wargas/create', [WargaController::class, 'create'])->name('wargas.create');
+Route::post('/wargas', [WargaController::class, 'store'])->name('wargas.store');
+Route::get('/wargas/{warga}/edit', [WargaController::class, 'edit'])->name('wargas.edit');
+Route::put('/wargas/{warga}', [WargaController::class, 'update'])->name('wargas.update');
+Route::delete('/wargas/{warga}', [WargaController::class, 'destroy'])->name('wargas.destroy');
+// Route untuk export ke excel 
+Route::get('/wargas/export', [WargaController::class, 'export'])->name('wargas.export');
 
 
 Route::get('/tagihans', [TagihanController::class, 'index'])->name('tagihans.index');

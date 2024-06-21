@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Warga;
 use App\Models\RT;
 use Illuminate\Http\Request;
+use App\Exports\WargasExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class WargaController extends Controller
 {
@@ -58,5 +61,11 @@ class WargaController extends Controller
     {
         $warga->delete();
         return redirect()->route('wargas.index')->with('success', 'Data warga berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $timestamp = Carbon::now('Asia/Jakarta')->format('Y-m-d_H-i-s');
+        return Excel::download(new WargasExport, "daftar_warga_{$timestamp}.xlsx");
     }
 }
