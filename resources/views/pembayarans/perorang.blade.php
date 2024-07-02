@@ -129,7 +129,7 @@
         </a>
         @if (isset($pembayarans) && count($pembayarans) > 0)
         <a href="{{ route('pembayarans.perorang.export', ['id_warga' => request('id_warga')]) }}" class="btn btn-success">
-            <i class="bi bi-file-earmark-excel"></i> Export to Excel
+            <i class="bi bi-file-earmark-excel"></i> Download Excel
         </a>
         @endif
     </div>

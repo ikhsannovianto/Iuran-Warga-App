@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User; // Pastikan Anda mengimpor model User jika belum melakukannya
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -91,12 +98,61 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Akun Anda berhasil dihapus. Silahkan register kembali');
     }
 
+    public function deletelist(User $user) {
+        $user->delete();
+        Auth::logout();
+        return redirect()->route('listuser')->with('success', 'Akun Anda berhasil dihapus. Silahkan register kembali');
+    }
+
     public function index()
     {
-        echo Auth::user()->id."<br>";
-        echo Auth::user()->name."<br>";
-        echo Auth::user()->email."<br>";
-        echo Auth::user()->password."<br>";
-        dump(Auth::user());
+        $users = User::paginate(10);
+        return view('listuser.index', compact('users'));
+    }
+
+    public function create()
+    {
+        return view('listuser.create');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('listuser')->with('success', 'User berhasil ditambahkan.');
+    }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'string'],
+        ]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'DataUserIuranWargaApps.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return redirect()->route('listuser')->with('success', 'Users imported successfully.');
     }
 }
+

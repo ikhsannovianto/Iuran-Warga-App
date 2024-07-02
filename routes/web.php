@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserPembayaranPerBulanController;
 use App\Http\Controllers\UserPembayaranPerOrangController;
 use App\Http\Controllers\UserTagihanController;
-use App\Http\Controllers\StatusController;
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
@@ -31,6 +31,21 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('rts', RTController::class);
 Route::resource('lingkungans', LingkunganController::class);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/users.index', [App\Http\Controllers\UserController::class, 'dataUser'])->name('index_datauser');
+    Route::get('/users.edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit_datauser');
+    Route::put('/users/update', [App\Http\Controllers\UserController::class, 'update'])->name('update_datauser');
+    Route::delete('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('delete_datauser');
+    Route::delete('/users/deletelist', [App\Http\Controllers\UserController::class, 'deletelist'])->name('deletelist_datauser');
+    Route::get('/listuser/index', [App\Http\Controllers\UserController::class, 'index'])->name('listuser')->middleware('auth');;
+    Route::get('/listuser/create', [App\Http\Controllers\UserController::class, 'create'])->name('create_listuser');
+    Route::post('/listuser/store', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('users.store');
+
+    //export exel 
+    Route::get('/export-users', [App\Http\Controllers\UserController::class, 'export'])->name('export.users');
+    Route::post('/import-users', [App\Http\Controllers\UserController::class, 'import'])->name('import.users');
+});
 
 
 // Route untuk warga

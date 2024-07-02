@@ -43,7 +43,7 @@
             </select>
         </form>
         
-        <a href="{{ route('tagihans.export') }}" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Ekspor ke Excel</a>
+        <a href="{{ route('tagihans.export') }}" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</a>
         <a href="{{ route('tagihans.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Tambah Tagihan</a>
     </div>
 

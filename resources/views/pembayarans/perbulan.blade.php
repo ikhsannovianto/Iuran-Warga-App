@@ -128,7 +128,7 @@
             <i class="bi bi-house-door"></i> Kembali ke Dashboard
         </a>
         <a href="{{ route('pembayarans.export', ['bulan' => request('bulan')]) }}" class="btn btn-success">
-            <i class="bi bi-file-earmark-excel"></i> Export to Excel
+            <i class="bi bi-file-earmark-excel"></i> Download Excel
         </a>
     </div>
 </div>

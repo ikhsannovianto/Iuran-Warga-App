@@ -39,21 +39,24 @@
                     </div>
                     <div class="mb-4">
                         <strong>Nama:</strong>
-                        <span class="ms-2">{{$datauser['name']}}</span>
+                        <span class="ms-2">{{ $datauser['name'] }}</span>
                     </div>
                     <div class="mb-4">
                         <strong>Email:</strong>
-                        <span class="ms-2">{{$datauser['email']}}</span>
+                        <span class="ms-2">{{ $datauser['email'] }}</span>
                     </div>
                     <div class="mb-4">
                         <strong>Status:</strong>
-                        <span class="ms-2">{{$datauser['role']}}</span>
+                        <span class="ms-2">{{ $datauser['role'] }}</span>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="{{ route('edit_datauser') }}" class="btn btn-warning me-2"><i class="bi bi-pencil-square"></i> Edit</a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
-                            <i class="bi bi-trash3"></i> Delete
+                            <i class="bi bi-trash3"></i> Hapus
                         </button>
+                        @if($datauser['role'] == 'admin')
+                            <a href="{{ route('listuser') }}" class="btn btn-info ms-2"><i class="bi bi-list"></i> Daftar Pengguna</a>
+                        @endif
                     </div>
                 </div>
                 @endif
@@ -86,7 +89,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">Batal</button>
-                <form action="{{ route('delete_datauser') }}" method="POST" class="d-inline">
+                <form action="{{ route('deletelist_datauser') }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Ya. Hapus</button>
@@ -98,8 +101,8 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const alertTimeout = setTimeout(function () {
-            const alert = document.querySelector('.alert');
+        setTimeout(function () {
+            var alert = document.querySelector('.alert');
             if (alert) {
                 alert.classList.remove('show');
                 alert.classList.add('fade');
