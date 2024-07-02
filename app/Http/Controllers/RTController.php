@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\RT;
 use Illuminate\Http\Request;
+use App\Exports\RTExport;
+use App\Exports\RTExportPdf;
+use App\Imports\RTImportExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RTController extends Controller
 {
@@ -65,5 +69,16 @@ class RTController extends Controller
     {
         $rt->delete();
         return redirect()->route('rts.index')->with('success', 'RT berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new RTExport, 'rts.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $exportPdf = new RTExportPdf();
+        return $exportPdf->exportPdf();
     }
 }

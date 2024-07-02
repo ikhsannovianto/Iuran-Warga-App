@@ -29,7 +29,16 @@ Route::get('/admin', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('rts', RTController::class);
+
+Route::get('rts', [RTController::class, 'index'])->name('rts.index');
+Route::get('rts/create', [RTController::class, 'create'])->name('rts.create');
+Route::post('rts', [RTController::class, 'store'])->name('rts.store');
+Route::get('rts/{rt}/edit', [RTController::class, 'edit'])->name('rts.edit');
+Route::put('rts/{rt}', [RTController::class, 'update'])->name('rts.update');
+Route::delete('rts/{rt}', [RTController::class, 'destroy'])->name('rts.destroy');
+Route::get('rts/export', [RTController::class, 'export'])->name('rts.export');
+Route::get('rts/export-pdf', [RTController::class, 'exportPdf'])->name('rts.export.pdf');
+
 Route::resource('lingkungans', LingkunganController::class);
 
 Route::middleware('auth')->group(function () {
