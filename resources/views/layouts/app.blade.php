@@ -37,7 +37,7 @@
         }
 
         .navbar-brand img {
-            max-height: 80px; /* Logo height */
+            max-height: 60px; /* Logo height */
             margin-right: 0px; /* Margin to separate image from text */
             transition: transform 0.5s; /* Smooth transition effect for transform property */
         }
