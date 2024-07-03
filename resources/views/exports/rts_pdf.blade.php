@@ -5,20 +5,22 @@
     <title>Manajemen RT</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', serif;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        table th, table td {
-            border: 1px solid #ddd;
+        th, td {
+            border: 1px solid #000;
             padding: 8px;
             text-align: left;
         }
-        table th {
-            background-color: #f2f2f2;
+        th {
+            background-color: #0275D8;
+            color: #FFFFFF;
+            text-align: center;
         }
         .text-center {
             text-align: center;

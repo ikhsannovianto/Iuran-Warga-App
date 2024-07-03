@@ -28,11 +28,11 @@
     @endif
     <div class="row justify-content-between mb-3">
         <div class="col-md-6">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
+            <a href="{{ route('wargas.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Tambah Warga</a>
         </div>
         <div class="col-md-6 text-end">
             <a href="{{ route('wargas.export') }}" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</a>
-            <a href="{{ route('wargas.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Tambah Warga</a>
+            <a href="{{ route('wargas.export.pdf') }}" class="btn btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</a>
         </div>
     </div>
     <div class="card shadow-sm rounded-lg">
@@ -78,7 +78,7 @@
                                                 <form action="{{ route('wargas.destroy', $warga->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Ya. Hapus</button>
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -91,6 +91,9 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="text-center mt-3">
+                <a href="{{ route('dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
     </div>
 </div>
 @endsection

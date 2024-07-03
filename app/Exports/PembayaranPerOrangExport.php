@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Pembayaran;
 use App\Models\Warga;
+use DateTime;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -19,7 +20,6 @@ class PembayaranPerOrangExport implements FromCollection, WithHeadings, WithStyl
     protected $idWarga;
     protected $namaWarga;
     protected $filterDescription;
-
 
     public function __construct($idWarga)
     {
@@ -52,7 +52,7 @@ class PembayaranPerOrangExport implements FromCollection, WithHeadings, WithStyl
             $pembayaran->warga->nama,
             $pembayaran->warga->rt->nama_rt,
             $pembayaran->warga->tagihans->isNotEmpty() ? $pembayaran->warga->tagihans->first()->jumlah_tagihan : 0,
-            \DateTime::createFromFormat('!m', $pembayaran->bulan)->format('F'),
+            DateTime::createFromFormat('!m', $pembayaran->bulan)->format('F'),
             $pembayaran->jumlah_dibayar,
             $pembayaran->tanggal_bayar,
             $pembayaran->metode_pembayaran,
@@ -88,15 +88,11 @@ class PembayaranPerOrangExport implements FromCollection, WithHeadings, WithStyl
         $sheet->getStyle('A1:G1')->applyFromArray([
             'font' => [
                 'bold' => true,
-                'size' => 14,
+                'size' => 16,
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'D3D3D3'], // Light grey
             ],
         ]);
 
@@ -112,36 +108,25 @@ class PembayaranPerOrangExport implements FromCollection, WithHeadings, WithStyl
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
             ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'F0F0F0'], // Very light grey
-            ],
         ]);
 
         // Style for the headers
         $sheet->getStyle('A3:G3')->applyFromArray([
             'font' => [
                 'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'],
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'A9A9A9'], // Dark grey
+                'startColor' => ['rgb' => '0275D8'], // Dark Blue
             ],
         ]);
 
         // Style for data cells
         $lastRow = $sheet->getHighestRow();
-        $sheet->getStyle('A4:G' . $lastRow)->applyFromArray([
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'DCDCDC'], // Gainsboro
-            ],
-        ]);
-
-        // Center align all columns
         $sheet->getStyle('A4:G' . $lastRow)->applyFromArray([
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,

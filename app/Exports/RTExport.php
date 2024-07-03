@@ -13,9 +13,17 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Font;
 
 class RTExport implements FromCollection, WithHeadings, WithStyles, WithCustomStartCell, WithMapping
 {
+    private $rowNumber;
+
+    public function __construct()
+    {
+        $this->rowNumber = 0;
+    }
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -30,10 +38,9 @@ class RTExport implements FromCollection, WithHeadings, WithStyles, WithCustomSt
      */
     public function map($rt): array
     {
-        static $number = 0;
-        $number++;
+        $this->rowNumber++;
         return [
-            $number,
+            $this->rowNumber,
             $rt->nama_rt,
             $rt->alamat,
             $rt->ketua_rt,
@@ -46,10 +53,8 @@ class RTExport implements FromCollection, WithHeadings, WithStyles, WithCustomSt
     public function headings(): array
     {
         return [
-            'No',
-            'Nama RT',
-            'Alamat',
-            'Ketua RT',
+            ['Manajemen RT'], // Additional title row
+            ['No', 'Nama RT', 'Alamat', 'Ketua RT'] // Table headers
         ];
     }
 
@@ -58,7 +63,7 @@ class RTExport implements FromCollection, WithHeadings, WithStyles, WithCustomSt
      */
     public function startCell(): string
     {
-        return 'B5';
+        return 'A1';
     }
 
     /**
@@ -66,14 +71,26 @@ class RTExport implements FromCollection, WithHeadings, WithStyles, WithCustomSt
      */
     public function styles(Worksheet $sheet)
     {
-        $sheet->getParent()->getDefaultStyle()->getFont()->setName('Times New Roman');
-
-        $sheet->mergeCells('B2:E3');
-        $sheet->setCellValue('B2', 'Manajemen RT');
-        $sheet->getStyle('B2:E3')->applyFromArray([
+        // Merge cells for additional title
+        $sheet->mergeCells('A1:D1');
+        $sheet->getStyle('A1')->applyFromArray([
             'font' => [
+                'name' => 'Times New Roman',
                 'bold' => true,
-                'size' => 14,
+                'size' => 16,
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER,
+            ],
+        ]);
+
+        // Style for table headers
+        $sheet->getStyle('A2:D2')->applyFromArray([
+            'font' => [
+                'name' => 'Times New Roman',
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'],
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -81,48 +98,30 @@ class RTExport implements FromCollection, WithHeadings, WithStyles, WithCustomSt
             ],
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => '8DB4E2'],
+                'startColor' => ['rgb' => '0275D8'],
             ],
         ]);
 
-        $sheet->getStyle('B5:E5')->applyFromArray([
-            'font' => [
-                'bold' => true,
-            ],
-            'alignment' => [
-                'horizontal' => Alignment::HORIZONTAL_CENTER,
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'B8CCE4'],
-            ],
-        ]);
+        // Border for table headers and data
+        $sheet->getStyle('A2:D' . $sheet->getHighestRow())
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN);
 
-        $lastRow = $sheet->getHighestRow();
-        $sheet->getStyle('B6:E' . $lastRow)->applyFromArray([
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'DCE6F1'],
-            ],
-        ]);
+        // Center alignment for table headers and data
+        $sheet->getStyle('A2:D' . $sheet->getHighestRow())
+            ->getAlignment()
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+            ->setVertical(Alignment::VERTICAL_CENTER);
 
-        $sheet->getStyle('B6:B' . $lastRow)->applyFromArray([
-            'alignment' => [
-                'horizontal' => Alignment::HORIZONTAL_CENTER,
-            ],
-        ]);
+        // Font for table data
+        $sheet->getStyle('A3:D' . $sheet->getHighestRow())
+            ->getFont()
+            ->setName('Times New Roman');
 
-        $sheet->getStyle('B2:E' . $lastRow)->applyFromArray([
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                    'color' => ['argb' => 'FF000000'],
-                ],
-            ],
-        ]);
-
-        foreach (range('B', 'E') as $column) {
-            $sheet->getColumnDimension($column)->setAutoSize(true);
+        // Autosize columns based on content
+        foreach (range('A', 'D') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
         }
     }
 }

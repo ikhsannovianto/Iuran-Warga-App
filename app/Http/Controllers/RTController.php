@@ -6,7 +6,6 @@ use App\Models\RT;
 use Illuminate\Http\Request;
 use App\Exports\RTExport;
 use App\Exports\RTExportPdf;
-use App\Imports\RTImportExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RTController extends Controller

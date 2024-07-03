@@ -17,6 +17,15 @@
         @endif
     </div>
 
+    <div class="text-center mb-5">
+        <a href="{{ route('laporan_pembayaran.export') }}" class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i> {{ __('Export to Excel') }}
+        </a>
+        <a href="{{ route('laporan.pembayaran.export.pdf') }}" class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i> {{ __('Download PDF') }}
+        </a>
+    </div>
+
     <div class="row mb-4 g-4">
         <!-- Card Total Pendapatan -->
         <div class="col-md-6">

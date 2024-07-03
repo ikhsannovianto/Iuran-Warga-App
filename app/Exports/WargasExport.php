@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Font;
 
 class WargasExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithTitle, ShouldAutoSize
 {
@@ -36,7 +37,7 @@ class WargasExport implements FromCollection, WithHeadings, WithMapping, WithSty
             ['No', 'Nama', 'Alamat', 'No Telp', 'Email', 'RT', 'Dibuat Pada', 'Diperbarui Pada'] // Header kolom tabel.
         ];
     }
-
+// asd
     public function map($warga): array
     {
         $this->rowNumber++; // Increment nomor baris.
@@ -64,6 +65,7 @@ class WargasExport implements FromCollection, WithHeadings, WithMapping, WithSty
         // Mengatur gaya untuk sel A1.
         $sheet->getStyle('A1')->applyFromArray([
             'font' => [
+                'name' => 'Times New Roman',
                 'bold' => true,
                 'size' => 16,
             ],
@@ -76,6 +78,7 @@ class WargasExport implements FromCollection, WithHeadings, WithMapping, WithSty
         // Mengatur gaya untuk sel A2 sampai H2 (header kolom).
         $sheet->getStyle('A2:H2')->applyFromArray([
             'font' => [
+                'name' => 'Times New Roman',
                 'bold' => true,
                 'color' => ['rgb' => 'FFFFFF'],
             ],
@@ -100,6 +103,11 @@ class WargasExport implements FromCollection, WithHeadings, WithMapping, WithSty
             ->getAlignment()
             ->setHorizontal(Alignment::HORIZONTAL_CENTER)
             ->setVertical(Alignment::VERTICAL_CENTER);
+
+        // Mengatur font untuk isi data (sel A3 sampai sel terakhir yang terisi data).
+        $sheet->getStyle('A3:H' . $sheet->getHighestRow())
+            ->getFont()
+            ->setName('Times New Roman');
 
         return []; // Mengembalikan array kosong karena tidak ada pengaturan tambahan yang perlu dikembalikan.
     }

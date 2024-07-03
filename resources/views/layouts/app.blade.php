@@ -18,8 +18,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/logo-brand.png') }}" type="image/x-icon">
-    
+    <link rel="icon" href="{{ asset('images/iuranwargalogo.png') }}" type="image/x-icon">
+
     <style>
         /* Font */
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
@@ -37,8 +37,8 @@
         }
 
         .navbar-brand img {
-            max-height: 40px; /* Logo height */
-            margin-right: 10px; /* Margin to separate image from text */
+            max-height: 80px; /* Logo height */
+            margin-right: 0px; /* Margin to separate image from text */
             transition: transform 0.5s; /* Smooth transition effect for transform property */
         }
 
@@ -95,7 +95,7 @@
         <nav class="navbar navbar-expand-md navbar-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo-brand.png') }}" alt="{{ config('app.name', 'Laravel') }}">
+                    <img src="{{ asset('images/iuranwargalogo.png') }}" alt="{{ config('app.name', 'Laravel') }}">
                     <span class="navbar-brand-text">{{ config('app.name', 'Laravel') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

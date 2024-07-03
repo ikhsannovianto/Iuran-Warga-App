@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
+use App\Exports\UserExportPdf;
 
 class UserController extends Controller
 {
@@ -154,5 +155,12 @@ class UserController extends Controller
 
         return redirect()->route('listuser')->with('success', 'Users imported successfully.');
     }
+
+    public function exportPdf()
+    {
+        $exporter = new UserExportPdf();
+        return $exporter->export();
+    }
+    
 }
 

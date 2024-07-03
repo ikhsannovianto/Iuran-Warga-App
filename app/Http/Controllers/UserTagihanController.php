@@ -28,25 +28,18 @@ class UserTagihanController extends Controller
 
         // Loop melalui setiap tagihan
         foreach ($tagihans as $tagihan) {
-            // Ambil jumlah tagihan
-            $jumlahTagihan = $tagihan->jumlah_tagihan;
-
-            // Ambil total pembayaran untuk tagihan tertentu
-            $totalPembayaran = $tagihan->pembayarans->sum('jumlah_dibayar');
-
-            // Hitung sisa tagihan yang belum terbayar
-            $belumTerbayar = max(0, $jumlahTagihan - $totalPembayaran);
-
-            // Tentukan status pembayaran
-            $status = ($totalPembayaran >= $jumlahTagihan) ? 'Lunas' : 'Belum Lunas';
+            // Menghitung total pembayaran hanya untuk bulan yang sama
+            $totalPembayaranBulanIni = $tagihan->pembayarans->where('bulan', $tagihan->bulan)->sum('jumlah_dibayar');
+            $belumTerbayar = max(0, $tagihan->jumlah_tagihan - $totalPembayaranBulanIni);
+            $status = ($totalPembayaranBulanIni >= $tagihan->jumlah_tagihan) ? 'Lunas' : 'Belum Lunas';
 
             // Tambahkan data tagihan dan laporan ke array laporan
             $laporan[] = [
                 'tagihan' => $tagihan,
                 'warga' => $tagihan->warga->nama,
                 'rt' => $tagihan->warga->rt->nama_rt,
-                'jumlah_tagihan' => (float)$jumlahTagihan,
-                'total_terbayar' => (float)$totalPembayaran,
+                'jumlah_tagihan' => (float)$tagihan->jumlah_tagihan,
+                'total_terbayar' => (float)$totalPembayaranBulanIni,
                 'belum_terbayar' => (float)$belumTerbayar,
                 'status' => $status,
             ];

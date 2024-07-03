@@ -9,16 +9,16 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
-class PembayaranPerBulanExport implements FromCollection, WithHeadings, WithStyles, WithCustomStartCell, WithMapping
+class PembayaranPerBulanExport implements FromCollection, WithHeadings, WithStyles, WithCustomStartCell, WithMapping, ShouldAutoSize
 {
     protected $bulan;
     protected $filterDescription;
-
 
     public function __construct($bulan)
     {
@@ -81,15 +81,11 @@ class PembayaranPerBulanExport implements FromCollection, WithHeadings, WithStyl
         $sheet->getStyle('A1:G1')->applyFromArray([
             'font' => [
                 'bold' => true,
-                'size' => 14,
+                'size' => 16,
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'D3D3D3'], // Light grey
             ],
         ]);
 
@@ -105,44 +101,33 @@ class PembayaranPerBulanExport implements FromCollection, WithHeadings, WithStyl
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
                 'vertical' => Alignment::VERTICAL_CENTER,
             ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'F0F0F0'], // Very light grey
-            ],
         ]);
 
-        // Style for the headers
+        // Style for the headers with background color
         $sheet->getStyle('A3:G3')->applyFromArray([
             'font' => [
                 'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'],
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'A9A9A9'], // Dark grey
-            ],
-        ]);
-
-        // Style for data cells
-        $lastRow = $sheet->getHighestRow();
-        $sheet->getStyle('A4:G' . $lastRow)->applyFromArray([
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => 'DCDCDC'], // Gainsboro
+                'startColor' => ['rgb' => '0275D8'], // Dark Blue
             ],
         ]);
 
         // Center align all columns
-        $sheet->getStyle('A4:G' . $lastRow)->applyFromArray([
+        $lastRow = $sheet->getHighestRow();
+        $sheet->getStyle('A3:G' . $lastRow)->applyFromArray([
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
         ]);
 
         // Add borders to the entire table
-        $sheet->getStyle('A1:G' . $lastRow)->applyFromArray([
+        $sheet->getStyle('A3:G' . $lastRow)->applyFromArray([
             'borders' => [
                 'allBorders' => [
                     'borderStyle' => Border::BORDER_THIN,
@@ -151,12 +136,7 @@ class PembayaranPerBulanExport implements FromCollection, WithHeadings, WithStyl
             ],
         ]);
 
-        // Auto-size columns
-        foreach (range('A', 'G') as $column) {
-            $sheet->getColumnDimension($column)->setAutoSize(true);
-        }
-
-        // Set number format for 'Tagihan' and 'Jumlah Bayar' columns
+        // Set number format for 'Jumlah Tagihan' and 'Jumlah Bayar' columns
         $sheet->getStyle('C4:C' . $lastRow)->getNumberFormat()->setFormatCode('#,##0');
         $sheet->getStyle('E4:E' . $lastRow)->getNumberFormat()->setFormatCode('#,##0');
     }

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RTController;
-use App\Http\Controllers\LingkunganController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\PembayaranPerBulanController;
@@ -39,8 +38,6 @@ Route::delete('rts/{rt}', [RTController::class, 'destroy'])->name('rts.destroy')
 Route::get('rts/export', [RTController::class, 'export'])->name('rts.export');
 Route::get('rts/export-pdf', [RTController::class, 'exportPdf'])->name('rts.export.pdf');
 
-Route::resource('lingkungans', LingkunganController::class);
-
 Route::middleware('auth')->group(function () {
     Route::get('/users.index', [App\Http\Controllers\UserController::class, 'dataUser'])->name('index_datauser');
     Route::get('/users.edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit_datauser');
@@ -54,6 +51,7 @@ Route::middleware('auth')->group(function () {
     //export exel 
     Route::get('/export-users', [App\Http\Controllers\UserController::class, 'export'])->name('export.users');
     Route::post('/import-users', [App\Http\Controllers\UserController::class, 'import'])->name('import.users');
+    Route::get('/users/export-pdf', [App\Http\Controllers\UserController::class, 'exportPdf'])->name('export.users.pdf');
 });
 
 
@@ -64,9 +62,9 @@ Route::post('/wargas', [WargaController::class, 'store'])->name('wargas.store');
 Route::get('/wargas/{warga}/edit', [WargaController::class, 'edit'])->name('wargas.edit');
 Route::put('/wargas/{warga}', [WargaController::class, 'update'])->name('wargas.update');
 Route::delete('/wargas/{warga}', [WargaController::class, 'destroy'])->name('wargas.destroy');
-// Route untuk export ke excel 
+// Route untuk export ke excel  dan PDF
 Route::get('/wargas/export', [WargaController::class, 'export'])->name('wargas.export');
-
+Route::get('/wargas/export-pdf', [WargaController::class, 'exportPDF'])->name('wargas.export.pdf');
 
 Route::get('/tagihans', [TagihanController::class, 'index'])->name('tagihans.index');
 Route::get('/tagihans/create', [TagihanController::class, 'create'])->name('tagihans.create');
@@ -89,6 +87,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/pembayarans/get-wargas', [PembayaranPerBulanController::class, 'getWargas'])->name('pembayarans.get-wargas');
 Route::get('/pembayarans/success', [PembayaranPerBulanController::class, 'success'])->name('pembayarans.success');
 Route::get('/laporan_pembayaran', [LaporanPembayaranController::class, 'index'])->name('laporan_pembayaran.index');
+Route::get('/laporan_pembayaran/export', [LaporanPembayaranController::class, 'export'])->name('laporan_pembayaran.export');
+Route::get('/laporan-pembayaran/export-pdf', [LaporanPembayaranController::class, 'exportPDF'])->name('laporan.pembayaran.export.pdf');
 Route::get('/pembayarans/perorang', [PembayaranPerOrangController::class, 'index'])->name('pembayarans.perorang');
 
 Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user');

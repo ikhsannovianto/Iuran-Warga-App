@@ -13,8 +13,8 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Ahmad Cristiani',
-                'email' => 'ahmad@gmail.com',
+                'name' => 'Budi',
+                'email' => 'budi@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
                 'role' => 'user',
@@ -23,8 +23,8 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Cristiani Ahmad',
-                'email' => 'cristiani@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
                 'role' => 'admin',

@@ -28,12 +28,11 @@
         </script>
     @endif
 
-    <div class="row justify-content-between mb-3">
+    <div class="row mb-3">
         <div class="col-md-6">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
+            <a href="{{ route('create_listuser') }}" class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Tambah Pengguna</a>
         </div>
         <div class="col-md-6 text-end">
-            <a href="{{ route('create_listuser') }}" class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Tambah Pengguna</a>
             <div class="btn-group ms-2">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-file-earmark-arrow-up"></i> Import
@@ -50,6 +49,7 @@
                 </div>
             </div>
             <a href="{{ route('export.users') }}" class="btn btn-success ms-2"><i class="bi bi-file-earmark-excel"></i> Download Excel</a>
+            <a href="{{ route('export.users.pdf') }}" class="btn btn-danger ms-2"><i class="bi bi-file-earmark-pdf"></i> Download PDF</a>
         </div>
     </div>
 
@@ -110,6 +110,10 @@
             </div>
             {{ $users->links() }}
         </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+        <a href="{{ route('dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
     </div>
 </div>
 @endsection
