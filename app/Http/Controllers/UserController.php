@@ -92,18 +92,6 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Data berhasil diperbarui. Silahkan login kembali');
     }
 
-    public function delete(Request $request) {
-        $user = $request->user();
-        $user->delete();
-        Auth::logout();
-        return redirect()->route('login')->with('success', 'Akun Anda berhasil dihapus. Silahkan register kembali');
-    }
-
-    public function deletelist(User $user) {
-        $user->delete();
-        Auth::logout();
-        return redirect()->route('listuser')->with('success', 'Akun Anda berhasil dihapus. Silahkan register kembali');
-    }
 
     public function index()
     {
@@ -118,7 +106,16 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         User::create([
             'name' => $request->name,
@@ -128,6 +125,21 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('listuser')->with('success', 'User berhasil ditambahkan.');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('listuser')->with('success', 'User berhasil dihapus.');
+    }
+
+    public function delete(Request $request) {
+        $user = $request->user();
+        $user->delete();
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Akun Anda berhasil dihapus. Silahkan register kembali');
     }
 
     protected function validator(array $data)
