@@ -34,9 +34,9 @@
         </div>
         <div class="col-md-6 text-end">
             <div class="btn-group ms-2">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-file-earmark-arrow-up"></i> Import
-                </button>
+                </button> -->
                 <div class="dropdown-menu p-3">
                     <form action="{{ route('import.users') }}" method="POST" enctype="multipart/form-data">
                         @csrf

@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/listuser/create', [App\Http\Controllers\UserController::class, 'create'])->name('create_listuser');
     Route::post('/listuser/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
 
-    //export exel 
+    //export excel
     Route::get('/export-users', [App\Http\Controllers\UserController::class, 'export'])->name('export.users');
     Route::post('/import-users', [App\Http\Controllers\UserController::class, 'import'])->name('import.users');
     Route::get('/users/export-pdf', [App\Http\Controllers\UserController::class, 'exportPdf'])->name('export.users.pdf');
