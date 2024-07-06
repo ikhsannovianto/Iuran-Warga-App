@@ -7,7 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use App\Models\Warga;
 
 class RegisterController extends Controller
 {
@@ -68,13 +69,23 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
         ]);
+
+        Warga::create([
+            'nama' => $data['name'],
+            'alamat' => '-',
+            'no_telp' => '-',
+            'email' => $data['email'],
+            'id_rt' => 1,
+        ]);
+
+        return $user;
     }
 
-    
+
 }

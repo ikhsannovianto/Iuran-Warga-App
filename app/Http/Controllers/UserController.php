@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User; // Pastikan Anda mengimpor model User jika belum melakukannya
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -13,6 +13,7 @@ use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UserExportPdf;
+use App\Models\Warga;
 
 class UserController extends Controller
 {
@@ -67,7 +68,7 @@ class UserController extends Controller
         {
             return view('users.index',['judul'=>'Silahkan login terlebih dahulu']);
         }
-        
+
     }
 
     public function edit(Request $request)
@@ -87,7 +88,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        Auth::logout();  // User akan logout setelah update 
+        Auth::logout();  // User akan logout setelah update
 
         return redirect()->route('login')->with('success', 'Data berhasil diperbarui. Silahkan login kembali');
     }
@@ -122,6 +123,14 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+        ]);
+
+        Warga::create([
+            'nama' => $request['name'],
+            'alamat' => '-',
+            'no_telp' => '-',
+            'email' => $request['email'],
+            'id_rt' => 1,
         ]);
 
         return redirect()->route('listuser')->with('success', 'User berhasil ditambahkan.');
@@ -173,6 +182,6 @@ class UserController extends Controller
         $exporter = new UserExportPdf();
         return $exporter->export();
     }
-    
+
 }
 
