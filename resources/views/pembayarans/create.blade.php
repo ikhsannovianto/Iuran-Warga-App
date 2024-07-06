@@ -31,13 +31,14 @@
                     }, 5000);
                 </script>
                 @endif
-            <div class="d-flex justify-content-center align-items-center mb-3">
-                @if (Auth::user()->role == 'admin')
-                    <a href="{{ route('dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
-                @else
-                    <a href="{{ route('user.dashboard') }}" class="btn btn-primary"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
-                @endif
-            </div>
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    @if (Auth::user()->role == 'admin')
+                        <a href="{{ route('dashboard') }}" class="btn btn-primary me-2"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
+                    @else
+                        <a href="{{ route('user.dashboard') }}" class="btn btn-primary me-2"><i class="bi bi-house-door"></i> Kembali ke Dashboard</a>
+                    @endif
+                    <a href="{{ route('usertagihans.index') }}" class="btn btn-primary"><i class="bi bi-credit-card"></i> Lihat Tagihan</a>
+                </div>
             <div class="card shadow-lg border-0 rounded-lg">
                 <div class="card-header bg-primary text-white text-center">
                     <h3 class="fw-bold my-4">{{ __('Pembayaran') }}</h3>
@@ -84,7 +85,7 @@
                                 <option value="transfer">Transfer</option>
                             </select>
                         </div>
-                        
+
                         <div class="mb-0 text-center">
                             <button type="submit" class="btn btn-primary w-100">{{ __('Submit') }}</button>
                         </div>

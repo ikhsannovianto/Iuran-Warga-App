@@ -53,5 +53,11 @@
             </div>
         </div>
     </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ route('pembayarans.create') }}" class="btn btn-success d-inline-block me-2">
+            <i class="bi bi-credit-card"></i> Lakukan Pembayaran
+        </a>
+    </div>
 </div>
 @endsection

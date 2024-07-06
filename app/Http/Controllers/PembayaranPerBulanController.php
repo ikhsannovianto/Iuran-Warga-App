@@ -8,6 +8,7 @@ use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use App\Exports\PembayaranPerBulanExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Auth;
 
 class PembayaranPerBulanController extends Controller
 {
@@ -20,7 +21,7 @@ class PembayaranPerBulanController extends Controller
         }
 
         $pembayarans = $query->get();
-        
+
         $wargaIds = $pembayarans->pluck('id_warga')->unique();
         $wargaPembayaran = [];
 
@@ -34,7 +35,12 @@ class PembayaranPerBulanController extends Controller
 
     public function create()
     {
-        $wargasWithTagihan = Warga::has('tagihans')->get();
+        // Dapatkan email user yang sedang login
+        $emailUser = Auth::user()->email;
+
+        // Dapatkan warga yang emailnya sama dengan email user yang login dan memiliki tagihan
+        $wargasWithTagihan = Warga::where('email', $emailUser)->has('tagihans')->get();
+
         return view('pembayarans.create', compact('wargasWithTagihan'));
     }
 
@@ -107,7 +113,7 @@ class PembayaranPerBulanController extends Controller
 
         return redirect()->route('pembayarans.perbulan')->with('success', 'Pembayaran berhasil diperbarui.');
     }
-    
+
     public function destroy(Pembayaran $pembayaran)
     {
         $pembayaran->delete();
