@@ -1,37 +1,41 @@
-# Iuran Warga App 💻💰
+# Iuran Warga App
 
-**Iuran Warga App** is a web-based application built with **Laravel** that helps manage the community contribution (iuran warga) for local administrative purposes. The app provides two types of users: **Admin** and **Regular User**. Admins have full control over the system, including managing user accounts, while regular users can view and update their contribution records.
+**Iuran Warga App** is a web application built with **Laravel** to manage community contributions (iuran warga) for local administrative purposes. The system features two types of users: **Admin** and **Regular User**. Admins have full control over the application, including managing user accounts and overseeing contributions, while regular users can view and update their own contribution records.
 
-This application uses **MySQL** (via **XAMPP**) for data storage and allows users to **CRUD (Create, Read, Update, Delete)** records. Additionally, it supports **Excel** and **PDF exports** for reports.
-
----
-
-## 🛠️ Features
-- **Admin and User Roles**: Different user permissions for admins and regular users.
-- **CRUD Operations**: Easily manage contributions with Create, Read, Update, and Delete functionalities.
-- **Export to Excel & PDF**: Generate reports and export them in Excel or PDF format.
-- **Dashboard Overview**: Interactive and real-time dashboard to track contributions.
+The app utilizes **MySQL** (via **XAMPP**) for data storage and supports **CRUD (Create, Read, Update, Delete)** operations. Additionally, it enables **Excel** and **PDF exports** for generating contribution reports.
 
 ---
 
-## 📸 Dashboard Preview
-Here's a preview of the dashboard you can expect:
+## Key Features
+
+- **Admin and User Roles**: Role-based access control, with different levels of permissions for Admins and Regular Users.
+- **CRUD Operations**: Efficient management of contribution records with capabilities to create, read, update, and delete entries.
+- **Excel & PDF Export**: Generate contribution reports and export them as Excel or PDF files.
+- **Interactive Dashboard**: Real-time dashboard for monitoring and tracking community contributions.
+
+---
+
+## Dashboard Preview
+
+Here’s a preview of the application's dashboard:
+
 ![Dashboard Preview](docs-images/dashboard-preview.png)
 
 ---
 
-## 🏃‍♂️ How to Run
-To run this project on your local machine, follow the steps below:
+## How to Run the Project
 
-1. **Start XAMPP** and make sure **Apache** and **MySQL** are running.
+To run this project locally, follow the steps below:
 
-2. Clone this repository:
+1. **Start XAMPP** and ensure **Apache** and **MySQL** services are running.
 
-   ```sh
+2. Clone the repository and navigate to the project directory:
+
+   ```bash
    git clone https://github.com/ikhsannovianto/Iuran-Warga-App.git
    cd Iuran-Warga-App
 
 ---
 
-## 📜 License
+## License
 This project is licensed under the **MIT License**. You can find the full text of the MIT License in the [LICENSE](LICENSE) file in this repository.
