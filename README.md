@@ -34,8 +34,3 @@ To run this project locally, follow the steps below:
    ```bash
    git clone https://github.com/ikhsannovianto/Iuran-Warga-App.git
    cd Iuran-Warga-App
-
----
-
-## License
-This project is licensed under the **MIT License**. You can find the full text of the MIT License in the [LICENSE](LICENSE) file in this repository.
